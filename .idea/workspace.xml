@@ -45,7 +45,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: com.factorysoft.snatch" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="66f906f0-e9a2-41e5-ae6c-f4413ff5ad6c" name="Default" comment="test_code">
+    <list default="true" id="66f906f0-e9a2-41e5-ae6c-f4413ff5ad6c" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/factorysoft/snatch/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/factorysoft/snatch/MainActivity.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -2098,7 +2098,11 @@
       <created>1399631180111</created>
       <updated>1399631180111</updated>
     </task>
-    <option name="localTasksCounter" value="8" />
+    <task id="LOCAL-00008" summary="test_code">
+      <created>1399631940812</created>
+      <updated>1399631940812</updated>
+    </task>
+    <option name="localTasksCounter" value="9" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2147,6 +2151,7 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="VcsManagerConfiguration">
+    <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
