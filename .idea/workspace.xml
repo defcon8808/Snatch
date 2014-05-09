@@ -45,8 +45,10 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: com.factorysoft.snatch" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="66f906f0-e9a2-41e5-ae6c-f4413ff5ad6c" name="Default" comment="test_git">
+    <list default="true" id="66f906f0-e9a2-41e5-ae6c-f4413ff5ad6c" name="Default" comment="test_code">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/app/src/main/java/com/factorysoft/snatch/MainActivity.java" afterPath="$PROJECT_DIR$/app/src/main/java/com/factorysoft/snatch/MainActivity.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Snatch.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -112,14 +114,14 @@
       <file leaf-file-name="MainActivity.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/factorysoft/snatch/MainActivity.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.70118845" vertical-offset="1449" max-vertical-offset="2945">
-              <caret line="120" column="57" selection-start-line="120" selection-start-column="57" selection-end-line="120" selection-end-column="57" />
+            <state vertical-scroll-proportion="0.39378238" vertical-offset="1425" max-vertical-offset="2945">
+              <caret line="105" column="28" selection-start-line="105" selection-start-column="28" selection-end-line="105" selection-end-column="28" />
               <folding>
                 <element signature="e#2376#2953#0" expanded="true" />
                 <element signature="e#2938#2939#0" expanded="true" />
                 <element signature="e#3056#3370#0" expanded="true" />
                 <element signature="e#3355#3356#0" expanded="true" />
-                <element signature="e#4121#4127#0" expanded="true" />
+                <element signature="e#4125#4131#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -1833,7 +1835,7 @@
     <property name="MemberChooser.showClasses" value="true" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="recentsLimit" value="5" />
-    <property name="options.lastSelected" value="project.propVCSSupport.Ignored.Files" />
+    <property name="options.lastSelected" value="vcs.Subversion" />
     <property name="options.splitter.main.proportions" value="0.3" />
     <property name="options.splitter.details.proportions" value="0.2" />
     <property name="options.searchVisible" value="true" />
@@ -2067,7 +2069,7 @@
     </option>
   </component>
   <component name="SvnConfiguration">
-    <configuration />
+    <configuration>C:\Users\defcon-Dev\AppData\Roaming\Subversion</configuration>
   </component>
   <component name="TaskManager">
     <task active="true" id="Default" summary="Default task">
@@ -2104,7 +2106,7 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="-8" y="-8" width="1382" height="754" extended-state="6" />
-    <editor active="true" />
+    <editor active="false" />
     <layout>
       <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -2117,7 +2119,7 @@
       <window_info id="Build Variants" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32847896" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32847896" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Android" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32686085" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
@@ -2158,7 +2160,8 @@
     <MESSAGE value="UI add, fix&#10;Add EditMemo Activity" />
     <MESSAGE value="test" />
     <MESSAGE value="test_git" />
-    <option name="LAST_COMMIT_MESSAGE" value="test_git" />
+    <MESSAGE value="test_code" />
+    <option name="LAST_COMMIT_MESSAGE" value="test_code" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2175,7 +2178,7 @@
             <element signature="e#2938#2939#0" expanded="true" />
             <element signature="e#3056#3370#0" expanded="true" />
             <element signature="e#3355#3356#0" expanded="true" />
-            <element signature="e#4121#4127#0" expanded="true" />
+            <element signature="e#4125#4131#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2219,7 +2222,7 @@
             <element signature="e#2938#2939#0" expanded="true" />
             <element signature="e#3056#3370#0" expanded="true" />
             <element signature="e#3355#3356#0" expanded="true" />
-            <element signature="e#4121#4127#0" expanded="true" />
+            <element signature="e#4125#4131#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2254,7 +2257,7 @@
             <element signature="e#2938#2939#0" expanded="true" />
             <element signature="e#3056#3370#0" expanded="true" />
             <element signature="e#3355#3356#0" expanded="true" />
-            <element signature="e#4121#4127#0" expanded="true" />
+            <element signature="e#4125#4131#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2282,7 +2285,7 @@
             <element signature="e#2938#2939#0" expanded="true" />
             <element signature="e#3056#3370#0" expanded="true" />
             <element signature="e#3355#3356#0" expanded="true" />
-            <element signature="e#4121#4127#0" expanded="true" />
+            <element signature="e#4125#4131#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2310,7 +2313,7 @@
             <element signature="e#2938#2939#0" expanded="true" />
             <element signature="e#3056#3370#0" expanded="true" />
             <element signature="e#3355#3356#0" expanded="true" />
-            <element signature="e#4121#4127#0" expanded="true" />
+            <element signature="e#4125#4131#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -2565,14 +2568,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/factorysoft/snatch/MainActivity.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.70118845" vertical-offset="1449" max-vertical-offset="2945">
-          <caret line="120" column="57" selection-start-line="120" selection-start-column="57" selection-end-line="120" selection-end-column="57" />
+        <state vertical-scroll-proportion="0.39378238" vertical-offset="1425" max-vertical-offset="2945">
+          <caret line="105" column="28" selection-start-line="105" selection-start-column="28" selection-end-line="105" selection-end-column="28" />
           <folding>
             <element signature="e#2376#2953#0" expanded="true" />
             <element signature="e#2938#2939#0" expanded="true" />
             <element signature="e#3056#3370#0" expanded="true" />
             <element signature="e#3355#3356#0" expanded="true" />
-            <element signature="e#4121#4127#0" expanded="true" />
+            <element signature="e#4125#4131#0" expanded="true" />
           </folding>
         </state>
       </provider>
