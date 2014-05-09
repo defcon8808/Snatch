@@ -124,7 +124,7 @@ public class MainActivity extends FragmentActivity {
 
     /*
      * SQLite 코드로 DB 조회 후 리스트뷰에 뿌림.
-     * initialize Cards
+     * initialize Cardss
      */
     private void initCards() {
         ArrayList<Card> cards = new ArrayList<Card>();
