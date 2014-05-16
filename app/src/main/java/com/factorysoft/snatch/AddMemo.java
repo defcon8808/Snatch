@@ -1,10 +1,8 @@
 package com.factorysoft.snatch;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
+
 import android.content.DialogInterface;
-import android.content.Intent;
+
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Color;
@@ -18,14 +16,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import com.fourmob.colorpicker.ColorPickerDialog;
 import com.fourmob.colorpicker.ColorPickerSwatch;
-
 import java.util.Calendar;
-import java.util.Locale;
-import java.util.TimeZone;
 
 
 public class AddMemo extends FragmentActivity {
@@ -38,8 +31,7 @@ public class AddMemo extends FragmentActivity {
     private SQLiteDatabase db;
     private AlarmDialog dialog;
     private ColorPickerDialog colorPicker;
-    private PendingIntent pendingIntent;
-    private AlarmManager am;
+    public AlarmReceiver alarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,12 +56,6 @@ public class AddMemo extends FragmentActivity {
                 tvAlarmView.setText(strDate);
                 llDiv.setVisibility(View.VISIBLE);
 
-                Intent intent = new Intent(AddMemo.this, AlarmReceiver.class);
-                pendingIntent = PendingIntent.getBroadcast(AddMemo.this, 0, intent, 0);
-
-                am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-                am.set(AlarmManager.RTC_WAKEUP, (getCalendar(strDate)).getTimeInMillis(), pendingIntent);
-                //am.setRepeating(AlarmManager.RTC_WAKEUP, (getCalendar(strDate).getTimeInMillis()), 1000*60, pendingIntent);
             }
         });
 
@@ -85,9 +71,6 @@ public class AddMemo extends FragmentActivity {
             public void onClick(View view) {
                 strDate = null;
                 llDiv.setVisibility(View.GONE);
-                if(am != null) {
-                    am.cancel(pendingIntent);
-                }
             }
         });
 
@@ -100,12 +83,8 @@ public class AddMemo extends FragmentActivity {
         }
     }
 
-    private Calendar getCalendar(String calendar) {
+    private Calendar getCalendar() {
         Calendar cal = Calendar.getInstance();
-
-        String[] div = calendar.split(" ");
-        String[] date = div[0].split("-");
-        String[] time = div[1].split(":");
 
         cal.setTimeInMillis(System.currentTimeMillis());
         cal.set(Calendar.YEAR, AlarmDialog.YEAR);
@@ -114,18 +93,8 @@ public class AddMemo extends FragmentActivity {
         cal.set(Calendar.HOUR_OF_DAY, AlarmDialog.HOUR);
         cal.set(Calendar.MINUTE, AlarmDialog.MINUTE);
         cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 00);
+        cal.set(Calendar.MILLISECOND, 0);
 
-
-        //Log.d("calendar", cal.get(Calendar.YEAR) + "/" + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.DATE) + " " + cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE) + ":" + cal.get(Calendar.SECOND));
-        /*
-        cal.set(Integer.parseInt(date[0]),
-                Integer.parseInt(date[1]),
-                Integer.parseInt(date[2]),
-                Integer.parseInt(time[0]),
-                Integer.parseInt(time[1]));
-        cal.set(Calendar.SECOND, 0);
-        */
         return cal;
     }
 
@@ -163,6 +132,8 @@ public class AddMemo extends FragmentActivity {
                     db.execSQL("INSERT INTO memo VALUES(null, '" + strTitle + "', '" + strContent + "', '" + strRgb + "', null);");
                 } else {
                     db.execSQL("INSERT INTO memo VALUES(null, '" + strTitle + "', '" + strContent + "', '" + strRgb + "', DATETIME('" + strDate + "'));");
+                    alarm.setAlarm(getBaseContext(), getCalendar());
+
                 }
                 finish();
             } catch(SQLiteException e) {

@@ -1,9 +1,5 @@
 package com.factorysoft.snatch;
 
-import android.app.Activity;
-import android.app.AlarmManager;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -20,7 +16,6 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.fourmob.colorpicker.ColorPickerDialog;
 import com.fourmob.colorpicker.ColorPickerSwatch;
@@ -39,8 +34,7 @@ public class EditMemo extends FragmentActivity {
     private AlarmDialog dialog;
     private ColorPickerDialog colorPicker;
     private int Id;
-    private PendingIntent pendingIntent;
-    private AlarmManager am;
+    public AlarmReceiver alarm;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,12 +58,6 @@ public class EditMemo extends FragmentActivity {
                 strDate = dialog.getStrDate();
                 tvAlarmView.setText(strDate);
                 llDiv.setVisibility(View.VISIBLE);
-
-                Intent intent = new Intent(EditMemo.this, AlarmReceiver.class);
-                pendingIntent = PendingIntent.getBroadcast(EditMemo.this, 0, intent, 0);
-
-                am = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
-                am.set(AlarmManager.RTC_WAKEUP, (getCalendar(strDate)).getTimeInMillis(), pendingIntent);
             }
         });
 
@@ -86,9 +74,7 @@ public class EditMemo extends FragmentActivity {
                 tvAlarmView.setText(null);
                 llDiv.setVisibility(View.GONE);
 
-                if(am != null) {
-                    am.cancel(pendingIntent);
-                }
+                alarm.cancelAlarm(getBaseContext());
             }
         });
 
@@ -120,12 +106,8 @@ public class EditMemo extends FragmentActivity {
         colorPicker = ColorPickerInit();
     }
 
-    private Calendar getCalendar(String calendar) {
+    private Calendar getCalendar() {
         Calendar cal = Calendar.getInstance();
-
-        String[] div = calendar.split(" ");
-        String[] date = div[0].split("-");
-        String[] time = div[1].split(":");
 
         cal.setTimeInMillis(System.currentTimeMillis());
         cal.set(Calendar.YEAR, AlarmDialog.YEAR);
@@ -134,18 +116,8 @@ public class EditMemo extends FragmentActivity {
         cal.set(Calendar.HOUR_OF_DAY, AlarmDialog.HOUR);
         cal.set(Calendar.MINUTE, AlarmDialog.MINUTE);
         cal.set(Calendar.SECOND, 0);
-        cal.set(Calendar.MILLISECOND, 00);
+        cal.set(Calendar.MILLISECOND, 0);
 
-
-        //Log.d("calendar", cal.get(Calendar.YEAR) + "/" + cal.get(Calendar.MONTH) + "/" + cal.get(Calendar.DATE) + " " + cal.get(Calendar.HOUR_OF_DAY) + ":" + cal.get(Calendar.MINUTE) + ":" + cal.get(Calendar.SECOND));
-        /*
-        cal.set(Integer.parseInt(date[0]),
-                Integer.parseInt(date[1]),
-                Integer.parseInt(date[2]),
-                Integer.parseInt(time[0]),
-                Integer.parseInt(time[1]));
-        cal.set(Calendar.SECOND, 0);
-        */
         return cal;
     }
 
@@ -187,6 +159,7 @@ public class EditMemo extends FragmentActivity {
                     db.execSQL("UPDATE memo SET title='" + strTitle + "', content='" + strContent + "', rgb='"+strRgb+"' where _id=" + Id);
                 } else {
                     db.execSQL("UPDATE memo SET title='" + strTitle + "', content='" + strContent + "', rgb='" + strRgb + "', time=DATETIME('" + strDate + "') where _id=" + Id);
+                    alarm.setAlarm(getBaseContext(), getCalendar());
                 }
                 finish();
             } catch(SQLiteException e) {
