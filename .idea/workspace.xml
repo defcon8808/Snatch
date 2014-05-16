@@ -45,7 +45,7 @@
     <option name="TOOL_WINDOW_CONFIGURED_FILTER" value="app: com.factorysoft.snatch" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="66f906f0-e9a2-41e5-ae6c-f4413ff5ad6c" name="Default" comment="test">
+    <list default="true" id="66f906f0-e9a2-41e5-ae6c-f4413ff5ad6c" name="Default" comment="20140516">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Snatch.iws" />
@@ -125,21 +125,21 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="BootReceiver.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="BootReceiver.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/factorysoft/snatch/BootReceiver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="380" max-vertical-offset="1425">
-              <caret line="68" column="28" selection-start-line="68" selection-start-column="28" selection-end-line="68" selection-end-column="28" />
+            <state vertical-scroll-proportion="0.3548387" vertical-offset="380" max-vertical-offset="1425">
+              <caret line="40" column="48" selection-start-line="40" selection-start-column="48" selection-end-line="40" selection-end-column="48" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AlarmReceiver.java" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="AlarmReceiver.java" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/factorysoft/snatch/AlarmReceiver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.12903225" vertical-offset="0" max-vertical-offset="589">
-              <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="437">
+              <caret line="21" column="31" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
               <folding />
             </state>
           </provider>
@@ -1766,7 +1766,6 @@
         <option value="$PROJECT_DIR$/app/src/main/res/layout/activity_main.xml" />
         <option value="$PROJECT_DIR$/app/src/main/res/layout/edit_memo.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/factorysoft/snatch/AlarmDialog.java" />
-        <option value="$PROJECT_DIR$/app/src/main/java/com/factorysoft/snatch/BootReceiver.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/factorysoft/snatch/AlarmReceiver.java" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/factorysoft/snatch/EditMemo.java" />
         <option value="$PROJECT_DIR$/app/src/main/AndroidManifest.xml" />
@@ -1774,6 +1773,7 @@
         <option value="$PROJECT_DIR$/app/src/main/java/com/factorysoft/snatch/AddMemo.java" />
         <option value="$PROJECT_DIR$/.idea/workspace.xml" />
         <option value="$PROJECT_DIR$/app/src/main/java/com/factorysoft/snatch/MainActivity.java" />
+        <option value="$PROJECT_DIR$/app/src/main/java/com/factorysoft/snatch/BootReceiver.java" />
       </list>
     </option>
   </component>
@@ -2259,7 +2259,11 @@
       <created>1399632762716</created>
       <updated>1399632762716</updated>
     </task>
-    <option name="localTasksCounter" value="11" />
+    <task id="LOCAL-00011" summary="20140516">
+      <created>1400236205891</created>
+      <updated>1400236205892</updated>
+    </task>
+    <option name="localTasksCounter" value="12" />
     <servers />
   </component>
   <component name="ToolWindowManager">
@@ -2319,7 +2323,8 @@
     <MESSAGE value="test_git" />
     <MESSAGE value="test_code" />
     <MESSAGE value="test" />
-    <option name="LAST_COMMIT_MESSAGE" value="test" />
+    <MESSAGE value="20140516" />
+    <option name="LAST_COMMIT_MESSAGE" value="20140516" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -2742,18 +2747,18 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/factorysoft/snatch/BootReceiver.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/factorysoft/snatch/AlarmReceiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="57" max-vertical-offset="1425">
-          <caret line="68" column="28" selection-start-line="68" selection-start-column="28" selection-end-line="68" selection-end-column="28" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="437">
+          <caret line="21" column="31" selection-start-line="21" selection-start-column="31" selection-end-line="21" selection-end-column="31" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/factorysoft/snatch/AlarmReceiver.java">
+    <entry file="file://$PROJECT_DIR$/app/src/main/java/com/factorysoft/snatch/BootReceiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.12903225" vertical-offset="0" max-vertical-offset="589">
-          <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
+        <state vertical-scroll-proportion="0.3548387" vertical-offset="380" max-vertical-offset="1425">
+          <caret line="40" column="48" selection-start-line="40" selection-start-column="48" selection-end-line="40" selection-end-column="48" />
           <folding />
         </state>
       </provider>
