@@ -8,21 +8,22 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.os.Vibrator;
-import android.util.Log;
 import android.widget.Toast;
 
 import java.util.Calendar;
 
 public class AlarmReceiver extends BroadcastReceiver {
-    AlarmManager alarmMgr;
-    PendingIntent alarmIntent;
+    static AlarmManager alarmMgr;
+    static PendingIntent alarmIntent;
 
     @Override
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving
         // an Intent broadcast.
         Toast.makeText(context, "알람울림", Toast.LENGTH_LONG).show();
-        Log.d("onReceive", "알람울림");
+        /*
+            이 사이에 Notification bar 에 띄우는 코드 삽입.
+         */
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(1000);
     }
@@ -32,7 +33,6 @@ public class AlarmReceiver extends BroadcastReceiver {
 
         Intent intent = new Intent(context, AlarmReceiver.class);
         alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
-
         alarmMgr.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), alarmIntent);
 
         // Enable {@code SampleBootReceiver} to automatically restart the alarm when the

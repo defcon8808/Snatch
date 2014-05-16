@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteException;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -79,10 +78,11 @@ public class MainActivity extends FragmentActivity {
             header.setPopupMenu(R.menu.edit_menu, new CardHeader.OnClickCardHeaderPopupMenuListener() {
                 @Override
                 public void onMenuItemClick(BaseCard card, MenuItem item) {
-                    Log.d("subMenu", item.getTitle().toString());
+                    //Log.d("subMenu", item.getTitle().toString());
 
                     if(item.getTitle().equals("문자전송")) {
-                        Toast.makeText(getContext(), "문자전송 다이얼로그 팝업", Toast.LENGTH_SHORT).show();
+                        Toast.makeText(getBaseContext(), "문자전송 다이얼로그 팝업", Toast.LENGTH_SHORT).show();
+
                     } else {
                         db.execSQL("DELETE FROM memo WHERE _id='" + mId + "'");
                         initCards();
@@ -96,7 +96,7 @@ public class MainActivity extends FragmentActivity {
             setOnClickListener(new OnCardClickListener() {
                 @Override
                 public void onClick(Card card, View view) {
-                    Intent intent = new Intent(getContext(), EditMemo.class);
+                    Intent intent = new Intent(getBaseContext(), EditMemo.class);
                     intent.putExtra("id", mId);
                     startActivity(intent);
                 }
@@ -164,7 +164,7 @@ public class MainActivity extends FragmentActivity {
         if (id == R.id.action_settings) {
             return true;
         } else if (id == R.id.action_add) {
-            Intent intent = new Intent(this, AddMemo.class);
+            Intent intent = new Intent(getBaseContext(), AddMemo.class);
             startActivity(intent);
         }
         return super.onOptionsItemSelected(item);

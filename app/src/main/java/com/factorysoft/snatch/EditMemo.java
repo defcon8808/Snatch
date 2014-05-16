@@ -48,7 +48,7 @@ public class EditMemo extends FragmentActivity {
         llDiv = (LinearLayout)findViewById(R.id.alarm_div);
         btnAlarmCancel = (Button)findViewById(R.id.alarm_cancel);
 
-
+        alarm = new AlarmReceiver();
 
         dialog = new AlarmDialog(EditMemo.this);
 
@@ -72,9 +72,8 @@ public class EditMemo extends FragmentActivity {
             @Override
             public void onClick(View view) {
                 tvAlarmView.setText(null);
+                strDate = null;
                 llDiv.setVisibility(View.GONE);
-
-                alarm.cancelAlarm(getBaseContext());
             }
         });
 
@@ -98,6 +97,7 @@ public class EditMemo extends FragmentActivity {
             title.setText(cursor.getString(0));
             content.setText(cursor.getString(1));
             strRgb = cursor.getString(2);
+            strDate = cursor.getString(cursor.getColumnIndex("time"));
             tvAlarmView.setText(cursor.getString(3));
 
             cursor.close();
@@ -152,14 +152,17 @@ public class EditMemo extends FragmentActivity {
         if (id == R.id.memo_modify) {
             strTitle = title.getText().toString();
             strContent = content.getText().toString();
-            strDate = tvAlarmView.getText().toString();
+            //strDate = tvAlarmView.getText().toString();
 
             try {
                 if(strDate == null) {
-                    db.execSQL("UPDATE memo SET title='" + strTitle + "', content='" + strContent + "', rgb='"+strRgb+"' where _id=" + Id);
+                    db.execSQL("UPDATE memo SET title='" + strTitle + "', content='" + strContent + "', rgb='"+strRgb+"', time=null where _id=" + Id);
+                    alarm.cancelAlarm(getBaseContext());
+                    //Log.d("EditMemo", "알람취소");
                 } else {
                     db.execSQL("UPDATE memo SET title='" + strTitle + "', content='" + strContent + "', rgb='" + strRgb + "', time=DATETIME('" + strDate + "') where _id=" + Id);
                     alarm.setAlarm(getBaseContext(), getCalendar());
+                    //Log.d("EditMemo", "알람등록");
                 }
                 finish();
             } catch(SQLiteException e) {

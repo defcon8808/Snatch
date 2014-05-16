@@ -45,6 +45,8 @@ public class AddMemo extends FragmentActivity {
         btnAlarmCancel = (Button)findViewById(R.id.alarm_cancel);
 
 
+        alarm = new AlarmReceiver();
+
         colorPicker = ColorPickerInit();
 
         dialog = new AlarmDialog(AddMemo.this);
@@ -95,12 +97,18 @@ public class AddMemo extends FragmentActivity {
         cal.set(Calendar.SECOND, 0);
         cal.set(Calendar.MILLISECOND, 0);
 
+        //Log.d("AddMemo", "cal set dateTime : " + AlarmDialog.YEAR + "/" + AlarmDialog.MONTH + "/" + AlarmDialog.DAYOFMONTH + " " + AlarmDialog.HOUR + ":" + AlarmDialog.MINUTE + ":00");
         return cal;
     }
 
     public ColorPickerDialog ColorPickerInit() {
         final ColorPickerDialog colorPickerDialog = new ColorPickerDialog();
+
         colorPickerDialog.initialize(R.string.dialog_title, new int[] { Color.CYAN, Color.LTGRAY, Color.BLACK, Color.BLUE, Color.GREEN, Color.MAGENTA, Color.RED, Color.GRAY, Color.YELLOW }, Color.BLACK, 3, 2);
+
+        if(strRgb == null) {
+            strRgb = String.valueOf(Color.BLACK);
+        }
         colorPickerDialog.setOnColorSelectedListener(new ColorPickerSwatch.OnColorSelectedListener() {
 
             @Override
@@ -123,6 +131,7 @@ public class AddMemo extends FragmentActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+
         if (id == R.id.memo_add) {
             strTitle = title.getText().toString();
             strContent = content.getText().toString();
@@ -132,6 +141,7 @@ public class AddMemo extends FragmentActivity {
                     db.execSQL("INSERT INTO memo VALUES(null, '" + strTitle + "', '" + strContent + "', '" + strRgb + "', null);");
                 } else {
                     db.execSQL("INSERT INTO memo VALUES(null, '" + strTitle + "', '" + strContent + "', '" + strRgb + "', DATETIME('" + strDate + "'));");
+                    //Log.d("AddMemo", getCalendar().getTime().toString());
                     alarm.setAlarm(getBaseContext(), getCalendar());
 
                 }
