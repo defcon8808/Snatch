@@ -46,6 +46,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="66f906f0-e9a2-41e5-ae6c-f4413ff5ad6c" name="Default" comment="20140516">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/app/src/main/java/com/factorysoft/snatch/BootReceiver.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="Snatch.iws" />
@@ -128,8 +129,8 @@
       <file leaf-file-name="BootReceiver.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/app/src/main/java/com/factorysoft/snatch/BootReceiver.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3548387" vertical-offset="380" max-vertical-offset="1425">
-              <caret line="40" column="48" selection-start-line="40" selection-start-column="48" selection-end-line="40" selection-end-column="48" />
+            <state vertical-scroll-proportion="0.2580645" vertical-offset="380" max-vertical-offset="1425">
+              <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
               <folding />
             </state>
           </provider>
@@ -2757,8 +2758,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/app/src/main/java/com/factorysoft/snatch/BootReceiver.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3548387" vertical-offset="380" max-vertical-offset="1425">
-          <caret line="40" column="48" selection-start-line="40" selection-start-column="48" selection-end-line="40" selection-end-column="48" />
+        <state vertical-scroll-proportion="0.2580645" vertical-offset="380" max-vertical-offset="1425">
+          <caret line="37" column="13" selection-start-line="37" selection-start-column="13" selection-end-line="37" selection-end-column="13" />
           <folding />
         </state>
       </provider>
