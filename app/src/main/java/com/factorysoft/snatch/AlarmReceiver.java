@@ -23,16 +23,18 @@ public class AlarmReceiver extends BroadcastReceiver {
         Toast.makeText(context, "알람울림", Toast.LENGTH_LONG).show();
         /*
             이 사이에 Notification bar 에 띄우는 코드 삽입.
+
          */
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(1000);
     }
 
-    public void setAlarm(Context context, Calendar cal) {
+    public void setAlarm(Context context, Calendar cal, int requestCode) {
         alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(context, AlarmReceiver.class);
-        alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
+
+        alarmIntent = PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_CANCEL_CURRENT);
         alarmMgr.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), alarmIntent);
 
         // Enable {@code SampleBootReceiver} to automatically restart the alarm when the

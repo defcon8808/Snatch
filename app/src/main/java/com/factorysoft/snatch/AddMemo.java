@@ -3,6 +3,7 @@ package com.factorysoft.snatch;
 
 import android.content.DialogInterface;
 
+import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Color;
@@ -32,6 +33,7 @@ public class AddMemo extends FragmentActivity {
     private AlarmDialog dialog;
     private ColorPickerDialog colorPicker;
     public AlarmReceiver alarm;
+    public static Boolean delete = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -64,7 +66,7 @@ public class AddMemo extends FragmentActivity {
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialogInterface) {
-                //Toast.makeText(getApplicationContext(), "알람설정이 취소 되었습니다.", Toast.LENGTH_SHORT).show();
+                //Set OnCancel Code
             }
         });
 
@@ -131,18 +133,44 @@ public class AddMemo extends FragmentActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
+        Cursor result;
+        int _id = 0;
 
         if (id == R.id.memo_add) {
             strTitle = title.getText().toString();
             strContent = content.getText().toString();
 
+
             try {
                 if(strDate == null) {
-                    db.execSQL("INSERT INTO memo VALUES(null, '" + strTitle + "', '" + strContent + "', '" + strRgb + "', null);");
+                    result = db.rawQuery("SELECT * FROM memo", null);
+
+                    Log.d("onOptionsItemSelected", "count : " + result.getCount());
+
+                    _id = result.getCount();
+
+                    if(!delete) {
+                        db.execSQL("INSERT INTO memo VALUES("+ _id +", '" + strTitle + "', '" + strContent + "', '" + strRgb + "', null);");
+                    } else {
+                        _id += 1;
+                        db.execSQL("INSERT INTO memo VALUES("+ _id +", '" + strTitle + "', '" + strContent + "', '" + strRgb + "', null);");
+                    }
+
                 } else {
-                    db.execSQL("INSERT INTO memo VALUES(null, '" + strTitle + "', '" + strContent + "', '" + strRgb + "', DATETIME('" + strDate + "'));");
-                    //Log.d("AddMemo", getCalendar().getTime().toString());
-                    alarm.setAlarm(getBaseContext(), getCalendar());
+                    result = db.rawQuery("SELECT * FROM memo", null);
+
+                    //Log.d("onOptionsItemSelected", "count : " + result.getCount());
+
+                    _id = result.getCount();
+
+                    if(!delete) {
+                        db.execSQL("INSERT INTO memo VALUES("+ _id + ", '" + strTitle + "', '" + strContent + "', '" + strRgb + "', DATETIME('" + strDate + "'));");
+                    } else {
+                        _id += 1;
+                        db.execSQL("INSERT INTO memo VALUES("+ _id + ", '" + strTitle + "', '" + strContent + "', '" + strRgb + "', DATETIME('" + strDate + "'));");
+                    }
+
+                    alarm.setAlarm(getBaseContext(), getCalendar(), _id);
 
                 }
                 finish();

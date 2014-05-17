@@ -7,6 +7,7 @@ import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 
+
 import java.util.ArrayList;
 import java.util.Calendar;
 
@@ -16,6 +17,8 @@ public class BootReceiver extends BroadcastReceiver {
     private SQLiteDatabase db;
     private ArrayList<String> dateTime = new ArrayList<String>();
     private ArrayList <Calendar> cal = new ArrayList<Calendar>();
+    private ArrayList<Integer> _id = new ArrayList<Integer>();
+    private ArrayList<Register> reg = new ArrayList<Register>();
 
     @Override
     public void onReceive(Context context, Intent intent) {
@@ -24,27 +27,42 @@ public class BootReceiver extends BroadcastReceiver {
 
         try {
             db = dbHelper.getWritableDatabase();
-            Cursor cursor = db.rawQuery("SELECT time FROM memo WHERE time > strftime('%Y-%m-%d %H:%M:%S', 'now', 'localtime')", null);
+            Cursor cursor = db.rawQuery("SELECT _id, time FROM memo WHERE time > " +
+                    "strftime('%Y-%m-%d %H:%M:%S', 'now', 'localtime')", null);
 
             while(cursor.moveToNext()) {
-                dateTime.add(cursor.getString(0));
+                _id.add(cursor.getInt(cursor.getColumnIndex("_id")));
+                dateTime.add(cursor.getString(cursor.getColumnIndex("time")));
             }
 
             for(String _dateTime : dateTime) {
                 cal.add(getCalendar(_dateTime));
             }
+
+            int index=0;
+            while(index < _id.size()) {
+                reg.add(new Register(_id.get(index), cal.get(index)));
+                index++;
+            }
+
+            /*
+                For Debugging Code
+
+            for(Register _reg : reg) {
+                Log.d("BootReceiver", "ID : " + _reg.getId() + ", Calendar : " +
+                        _reg.getCal().getTime());
+            }
+            */
+
         } catch (SQLiteException e) {
             db = dbHelper.getReadableDatabase();
         }
 
         // an Intent broadcast.
         if(intent.getAction().equals("android.intent.action.BOOT_COMPLETED")) {
-            //Log.d("BOOT_COMPLETED", "부팅후 리시버로딩");
             //Set Alarm
-            //Log.d("BootReceiver", "cal size : " + cal.size());
-
-            for(Calendar _cal : cal) {
-                alarm.setAlarm(context, _cal);
+            for(Register _reg : reg) {
+                alarm.setAlarm(context, _reg.getCal(), _reg.getId());
             }
         }
     }
@@ -71,5 +89,23 @@ public class BootReceiver extends BroadcastReceiver {
         cal.set(Calendar.MILLISECOND, 0);
 
         return cal;
+    }
+
+    private class Register {
+        private int id;
+        private Calendar cal;
+
+        private Register(int _id, Calendar _cal) {
+            this.id = _id;
+            this.cal = _cal;
+        }
+
+        public int getId() {
+            return id;
+        }
+
+        public Calendar getCal() {
+            return cal;
+        }
     }
 }

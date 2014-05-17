@@ -8,6 +8,7 @@ import android.database.sqlite.SQLiteException;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -85,6 +86,7 @@ public class MainActivity extends FragmentActivity {
 
                     } else {
                         db.execSQL("DELETE FROM memo WHERE _id='" + mId + "'");
+                        AddMemo.delete = true;
                         initCards();
                     }
                 }
@@ -132,6 +134,7 @@ public class MainActivity extends FragmentActivity {
         Cursor cursor = db.rawQuery("SELECT _id, title, content, rgb FROM memo", null);
 
         while(cursor.moveToNext()) {
+            Log.d("initCards()", "_id : " + cursor.getInt(cursor.getColumnIndex("_id")));
             MemoCard card = new MemoCard(this, cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
             cards.add(card);
         }

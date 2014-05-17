@@ -64,7 +64,7 @@ public class EditMemo extends FragmentActivity {
         dialog.setOnCancelListener(new DialogInterface.OnCancelListener() {
             @Override
             public void onCancel(DialogInterface dialogInterface) {
-                //Toast.makeText(getApplicationContext(), "알람설정이 취소 되었습니다.", Toast.LENGTH_SHORT).show();
+                //Set OnCancel Code
             }
         });
 
@@ -123,7 +123,9 @@ public class EditMemo extends FragmentActivity {
 
     public ColorPickerDialog ColorPickerInit() {
         final ColorPickerDialog colorPickerDialog = new ColorPickerDialog();
-        colorPickerDialog.initialize(R.string.dialog_title, new int[] { Color.CYAN, Color.LTGRAY, Color.BLACK, Color.BLUE, Color.GREEN, Color.MAGENTA, Color.RED, Color.GRAY, Color.YELLOW }, Integer.parseInt(strRgb), 3, 2);
+        colorPickerDialog.initialize(R.string.dialog_title, new int[] { Color.CYAN, Color.LTGRAY, Color.BLACK,
+                Color.BLUE, Color.GREEN, Color.MAGENTA, Color.RED, Color.GRAY, Color.YELLOW },
+                Integer.parseInt(strRgb), 3, 2);
         colorPickerDialog.setOnColorSelectedListener(new ColorPickerSwatch.OnColorSelectedListener() {
 
             @Override
@@ -149,19 +151,22 @@ public class EditMemo extends FragmentActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
+
         if (id == R.id.memo_modify) {
             strTitle = title.getText().toString();
             strContent = content.getText().toString();
-            //strDate = tvAlarmView.getText().toString();
 
             try {
                 if(strDate == null) {
-                    db.execSQL("UPDATE memo SET title='" + strTitle + "', content='" + strContent + "', rgb='"+strRgb+"', time=null where _id=" + Id);
+                    db.execSQL("UPDATE memo SET title='" + strTitle + "', content='" + strContent
+                            + "', rgb='"+strRgb+"', time=null where _id=" + Id);
                     alarm.cancelAlarm(getBaseContext());
                     //Log.d("EditMemo", "알람취소");
                 } else {
-                    db.execSQL("UPDATE memo SET title='" + strTitle + "', content='" + strContent + "', rgb='" + strRgb + "', time=DATETIME('" + strDate + "') where _id=" + Id);
-                    alarm.setAlarm(getBaseContext(), getCalendar());
+                    db.execSQL("UPDATE memo SET title='" + strTitle + "', content='" + strContent
+                            + "', rgb='" + strRgb + "', time=DATETIME('" + strDate + "') where _id="
+                            + Id);
+                    alarm.setAlarm(getBaseContext(), getCalendar(), Id);
                     //Log.d("EditMemo", "알람등록");
                 }
                 finish();
