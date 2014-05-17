@@ -41,16 +41,20 @@
                 android:value="MainActivity" />
         </activity>
 
-        <receiver
-            android:name="com.factorysoft.snatch.AlarmReceiver" >
+        <receiver android:name="com.factorysoft.snatch.AlarmReceiver" >
         </receiver>
-
-        <receiver android:name=".BootReceiver"
-            android:enabled="false">
+        <receiver
+            android:name="com.factorysoft.snatch.BootReceiver"
+            android:enabled="false" >
             <intent-filter>
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+
+        <activity
+            android:name="com.factorysoft.snatch.CreateNotification"
+            android:label="@string/title_activity_create_notification" >
+        </activity>
     </application>
 
 </manifest>

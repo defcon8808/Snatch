@@ -7,5 +7,6 @@
     <string name="hello_world">Hello world!</string>
     <string name="title_activity_edit_memo">메모 수정</string>
     <string name="dialog_title">색상 선택</string>
+    <string name="title_activity_create_notification">createNotification</string>
 
 </resources>

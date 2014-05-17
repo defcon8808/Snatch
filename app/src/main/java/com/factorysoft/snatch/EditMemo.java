@@ -92,15 +92,16 @@ public class EditMemo extends FragmentActivity {
 
             Cursor cursor;
             cursor = db.rawQuery("SELECT title, content, rgb, time FROM memo where _id="+Id, null);
-            cursor.moveToNext();
 
-            title.setText(cursor.getString(0));
-            content.setText(cursor.getString(1));
-            strRgb = cursor.getString(2);
-            strDate = cursor.getString(cursor.getColumnIndex("time"));
-            tvAlarmView.setText(cursor.getString(3));
+            while(cursor.moveToNext()) {
+                title.setText(cursor.getString(0));
+                content.setText(cursor.getString(1));
+                strRgb = cursor.getString(2);
+                strDate = cursor.getString(cursor.getColumnIndex("time"));
+                tvAlarmView.setText(cursor.getString(3));
 
-            cursor.close();
+                cursor.close();
+            }
         }
 
         colorPicker = ColorPickerInit();
