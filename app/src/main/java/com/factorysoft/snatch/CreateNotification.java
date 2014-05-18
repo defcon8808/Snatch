@@ -49,8 +49,11 @@ public class CreateNotification extends Activity {
     public void showNotification(Context context, int requestCode) {
         queryDB(context, requestCode);
 
+        Intent intent = new Intent(context, EditMemo.class);
+        intent.putExtra("id", requestCode);
+
         PendingIntent contentIntent = PendingIntent.getActivity(context, requestCode,
-                new Intent(context, MainActivity.class), PendingIntent.FLAG_UPDATE_CURRENT);
+                intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(context)

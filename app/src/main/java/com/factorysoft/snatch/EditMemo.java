@@ -88,7 +88,7 @@ public class EditMemo extends FragmentActivity {
         Intent intent = getIntent();
 
         if(intent != null) {
-            Id = intent.getIntExtra("id", 0);
+            Id = intent.getIntExtra("id", -1);
 
             Cursor cursor;
             cursor = db.rawQuery("SELECT title, content, rgb, time FROM memo where _id="+Id, null);

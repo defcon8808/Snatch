@@ -28,9 +28,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         /*
             이 사이에 Notification bar 에 띄우는 코드 삽입.
          */
-        Log.d("AlarmReceiver", "id : " + intent.getStringExtra("id"));
+        Log.d("AlarmReceiver", "id : " + intent.getIntExtra("id", -1));
         CreateNotification noti = new CreateNotification();
-        noti.showNotification(context, Integer.parseInt(intent.getStringExtra("id")));
+        noti.showNotification(context, intent.getIntExtra("id", -1));
 
         Vibrator vibrator = (Vibrator) context.getSystemService(Context.VIBRATOR_SERVICE);
         vibrator.vibrate(1000);
@@ -40,7 +40,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
 
         Intent intent = new Intent(context, AlarmReceiver.class);
-        intent.putExtra("id", String.valueOf(requestCode));
+        intent.putExtra("id", requestCode);
 
         alarmIntent = PendingIntent.getBroadcast(context, requestCode, intent, PendingIntent.FLAG_UPDATE_CURRENT);
         alarmMgr.set(AlarmManager.RTC_WAKEUP, cal.getTimeInMillis(), alarmIntent);
