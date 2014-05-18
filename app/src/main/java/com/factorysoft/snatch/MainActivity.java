@@ -1,18 +1,24 @@
 package com.factorysoft.snatch;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
+import android.preference.DialogPreference;
 import android.support.v4.app.FragmentActivity;
+import android.text.Editable;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Toast;
 
@@ -82,8 +88,9 @@ public class MainActivity extends FragmentActivity {
                     //Log.d("subMenu", item.getTitle().toString());
 
                     if(item.getTitle().equals("문자전송")) {
-                        Toast.makeText(getBaseContext(), "문자전송 다이얼로그 팝업", Toast.LENGTH_SHORT).show();
-
+                        //Toast.makeText(getBaseContext(), "문자전송 다이얼로그 팝업", Toast.LENGTH_SHORT).show();
+                        int itemId = item.getOrder()+1;
+                        showDialog(MainActivity.this, itemId);
                     } else {
                         db.execSQL("DELETE FROM memo WHERE _id='" + mId + "'");
                         AddMemo.delete = true;
@@ -148,6 +155,48 @@ public class MainActivity extends FragmentActivity {
         if (listView!=null){
             listView.setAdapter(mCardArrayAdapter);
         }
+    }
+
+    private void showDialog(Context context, int id) {
+        AlertDialog.Builder builder;
+        AlertDialog alertDialog;
+
+        LayoutInflater inflater = (LayoutInflater)context.getSystemService(LAYOUT_INFLATER_SERVICE);
+        View view = inflater.inflate(R.layout.custom_dialog, (ViewGroup)findViewById(R.id.root_layout));
+
+        EditText editTitle = (EditText)view.findViewById(R.id.editTitle);
+        EditText editContent = (EditText)view.findViewById(R.id.editContent);
+        EditText editDateTime = (EditText)view.findViewById(R.id.editDateTime);
+
+        Cursor cursor = db.rawQuery("SELECT title, content, time FROM memo WHERE _id='"+ id +"'", null);
+
+        while(cursor.moveToNext()) {
+            editTitle.setText(cursor.getString(cursor.getColumnIndex("title")));
+            editContent.setText(cursor.getString(cursor.getColumnIndex("content")));
+            editDateTime.setText(cursor.getString(cursor.getColumnIndex("time")));
+        }
+
+        cursor.close();
+
+        builder = new AlertDialog.Builder(context);
+        builder.setView(view);
+        builder.setTitle("문자전송");
+        builder.setPositiveButton("전송", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                Toast.makeText(getApplicationContext(), "문자 전송 완료", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+
+        alertDialog = builder.create();
+        alertDialog.show();
     }
 
     @Override
