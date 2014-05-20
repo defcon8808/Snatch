@@ -149,7 +149,7 @@ public class AddMemo extends FragmentActivity {
 
                     _id = result.getCount();
 
-                    if(!delete) {
+                    if(delete) {
                         db.execSQL("INSERT INTO memo VALUES("+ _id +", '" + strTitle + "', '" + strContent + "', '" + strRgb + "', null);");
                     } else {
                         _id += 1;
@@ -163,7 +163,7 @@ public class AddMemo extends FragmentActivity {
 
                     _id = result.getCount();
 
-                    if(!delete) {
+                    if(delete) {
                         db.execSQL("INSERT INTO memo VALUES("+ _id + ", '" + strTitle + "', '" + strContent + "', '" + strRgb + "', DATETIME('" + strDate + "'));");
                     } else {
                         _id += 1;

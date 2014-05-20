@@ -8,16 +8,53 @@
         android:id="@+id/colorBorder"
         android:background="@drawable/rectangle"
         android:layout_width="10dp"
-        android:layout_height="@dimen/card_base_empty_height"/>
+        android:layout_height="@dimen/card_base_empty_height" />
 
-    <!-- Use same ID to use built-in features -->
-    <TextView
+    <RelativeLayout
         android:layout_toRightOf="@id/colorBorder"
-        android:id="@+id/card_main_inner_simple_title"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/second_sector"
+        android:layout_alignTop="@+id/colorBorder">
+        <TextView
+            android:id="@+id/card_main_inner_simple_title"
+            android:gravity="left"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginBottom="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:id="@+id/second_sector"
+        android:layout_width="match_parent"
+        android:layout_height="30dip"
         android:layout_marginLeft="10dp"
         android:layout_marginRight="5dp"
-        android:gravity="left"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"/>
+        android:layout_alignBottom="@+id/colorBorder"
+        android:layout_toRightOf="@+id/colorBorder"
+        android:visibility="gone">
+        <View
+            android:id="@+id/line"
+            android:layout_width="match_parent"
+            android:layout_height="5dp"
+            android:layout_margin="1dp"
+            android:background="@drawable/line_seperator"
+            android:layerType="software"/>
+
+        <TextView
+            android:id="@+id/tvDateTime"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="9sp"
+            android:textColor="@android:color/darker_gray"
+            android:layout_below="@+id/line"
+            android:layout_marginTop="2dp"
+            android:layout_marginRight="10dp"
+            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
+
     
 </RelativeLayout>

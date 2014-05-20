@@ -20,6 +20,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
@@ -63,13 +65,15 @@ public class MainActivity extends FragmentActivity {
         protected String mTitleMain; // Content
         protected String mRgb; // Color code
         protected int mId; // Column ID
+        protected String mDateTime; // DateTime
 
-        public MemoCard(Context context, int id, String titleHeader, String titleMain, String rgb) {
+        public MemoCard(Context context, int id, String titleHeader, String titleMain, String rgb, String dateTime) {
             super(context, R.layout.inner_content);
             this.mId=id;
             this.mTitleHeader=titleHeader;
             this.mTitleMain=titleMain;
             this.mRgb=rgb;
+            this.mDateTime=dateTime;
             init();
         }
 
@@ -89,8 +93,9 @@ public class MainActivity extends FragmentActivity {
 
                     if(item.getTitle().equals("문자전송")) {
                         //Toast.makeText(getBaseContext(), "문자전송 다이얼로그 팝업", Toast.LENGTH_SHORT).show();
-                        int itemId = item.getOrder()+1;
-                        showDialog(MainActivity.this, itemId);
+                        //int itemId = Integer.parseInt(card.getId());
+                        //int itemId = item.getOrder()+1;
+                        showDialog(MainActivity.this, mId);
                     } else {
                         db.execSQL("DELETE FROM memo WHERE _id='" + mId + "'");
                         AddMemo.delete = true;
@@ -122,12 +127,20 @@ public class MainActivity extends FragmentActivity {
         public void setupInnerViewElements(ViewGroup parent, View view) {
             super.setupInnerViewElements(parent, view);
 
+            RelativeLayout sndSector = (RelativeLayout)parent.findViewById(R.id.second_sector);
             ImageView sticky_color = (ImageView)parent.findViewById(R.id.colorBorder);
 
             GradientDrawable changeColor = (GradientDrawable)sticky_color.getBackground();
 
             // Change sticky color.
             changeColor.setColor(Integer.parseInt(mRgb));
+
+            if(mDateTime != null) {
+                sndSector.setVisibility(View.VISIBLE);
+                TextView tvDateTime = (TextView)parent.findViewById(R.id.tvDateTime);
+                tvDateTime.setText(mDateTime);
+            }
+
         }
     }
 
@@ -138,11 +151,11 @@ public class MainActivity extends FragmentActivity {
     private void initCards() {
         ArrayList<Card> cards = new ArrayList<Card>();
 
-        Cursor cursor = db.rawQuery("SELECT _id, title, content, rgb FROM memo", null);
+        Cursor cursor = db.rawQuery("SELECT _id, title, content, rgb, time FROM memo", null);
 
         while(cursor.moveToNext()) {
             //Log.d("initCards()", "_id : " + cursor.getInt(cursor.getColumnIndex("_id")));
-            MemoCard card = new MemoCard(this, cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3));
+            MemoCard card = new MemoCard(this, cursor.getInt(0), cursor.getString(1), cursor.getString(2), cursor.getString(3), cursor.getString(4));
             cards.add(card);
         }
 
@@ -173,7 +186,12 @@ public class MainActivity extends FragmentActivity {
         while(cursor.moveToNext()) {
             editTitle.setText(cursor.getString(cursor.getColumnIndex("title")));
             editContent.setText(cursor.getString(cursor.getColumnIndex("content")));
-            editDateTime.setText(cursor.getString(cursor.getColumnIndex("time")));
+
+            if (cursor.getString(cursor.getColumnIndex("time")) != null) {
+                editDateTime.setText(cursor.getString(cursor.getColumnIndex("time")));
+            } else {
+                editDateTime.setHint("설정안됨");
+            }
         }
 
         cursor.close();
