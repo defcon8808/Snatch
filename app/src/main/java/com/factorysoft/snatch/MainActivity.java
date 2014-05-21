@@ -9,10 +9,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
-import android.preference.DialogPreference;
 import android.support.v4.app.FragmentActivity;
-import android.text.Editable;
-import android.util.Log;
+import android.telephony.SmsManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -173,22 +171,29 @@ public class MainActivity extends FragmentActivity {
     private void showDialog(Context context, int id) {
         AlertDialog.Builder builder;
         AlertDialog alertDialog;
+        String strTitle=null, strContent=null, strDateTime=null;
+
 
         LayoutInflater inflater = (LayoutInflater)context.getSystemService(LAYOUT_INFLATER_SERVICE);
-        View view = inflater.inflate(R.layout.custom_dialog, (ViewGroup)findViewById(R.id.root_layout));
+        final View view = inflater.inflate(R.layout.custom_dialog, (ViewGroup)findViewById(R.id.root_layout));
 
-        EditText editTitle = (EditText)view.findViewById(R.id.editTitle);
-        EditText editContent = (EditText)view.findViewById(R.id.editContent);
-        EditText editDateTime = (EditText)view.findViewById(R.id.editDateTime);
+        final EditText editTitle = (EditText)view.findViewById(R.id.editTitle);
+        final EditText editContent = (EditText)view.findViewById(R.id.editContent);
+        final EditText editDateTime = (EditText)view.findViewById(R.id.editDateTime);
+        final EditText editPhoneNum = (EditText)view.findViewById(R.id.editPhoneNum);
 
         Cursor cursor = db.rawQuery("SELECT title, content, time FROM memo WHERE _id='"+ id +"'", null);
 
         while(cursor.moveToNext()) {
-            editTitle.setText(cursor.getString(cursor.getColumnIndex("title")));
-            editContent.setText(cursor.getString(cursor.getColumnIndex("content")));
+            strTitle = cursor.getString(cursor.getColumnIndex("title"));
+            strContent = cursor.getString(cursor.getColumnIndex("content"));
+            strDateTime = cursor.getString(cursor.getColumnIndex("time"));
 
-            if (cursor.getString(cursor.getColumnIndex("time")) != null) {
-                editDateTime.setText(cursor.getString(cursor.getColumnIndex("time")));
+            editTitle.setText(strTitle);
+            editContent.setText(strContent);
+
+            if (strDateTime != null) {
+                editDateTime.setText(strDateTime);
             } else {
                 editDateTime.setHint("설정안됨");
             }
@@ -196,12 +201,19 @@ public class MainActivity extends FragmentActivity {
 
         cursor.close();
 
+        final ArrayList<String> strMessages = new ArrayList<String>();
+
+        strMessages.add(0, strTitle);
+        strMessages.add(1, strContent);
+        strMessages.add(2, strDateTime);
+
         builder = new AlertDialog.Builder(context);
         builder.setView(view);
         builder.setTitle("문자전송");
         builder.setPositiveButton("전송", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
+                sendSMS(editPhoneNum.getText().toString() ,strMessages);
                 Toast.makeText(getApplicationContext(), "문자 전송 완료", Toast.LENGTH_SHORT).show();
             }
         });
@@ -215,6 +227,40 @@ public class MainActivity extends FragmentActivity {
 
         alertDialog = builder.create();
         alertDialog.show();
+    }
+
+    private void sendSMS(String DestPhoneNum, ArrayList<String> strMessages) {
+        String strTitle = strMessages.get(0);
+        String strContent = strMessages.get(1);
+        String strDateTime = strMessages.get(2);
+        String msFormat;
+
+        final int LIMIT_CHARACTER = 80;
+
+        if(strDateTime != null) {
+            msFormat = String.format("#Snatch%n" +
+                    "[제목]%n" +
+                    "%s%n%n" +
+                    "[내용]%n" +
+                    "%n%s%n%n" +
+                    "[일시]%n" +
+                    "%s", strTitle, strContent, strDateTime);
+        } else {
+            msFormat = String.format("#Snatch%n" +
+                    "[제목]%n" +
+                    "%s%n" +
+                    "[내용]%n" +
+                    "%n%s%n", strTitle, strContent);
+        }
+
+        SmsManager sender = SmsManager.getDefault();
+
+        if(msFormat.length() > LIMIT_CHARACTER) {
+            ArrayList<String> messages = sender.divideMessage(msFormat);
+            sender.sendMultipartTextMessage(DestPhoneNum, "", messages, null, null);
+        } else {
+            sender.sendTextMessage(DestPhoneNum, "", msFormat, null, null);
+        }
     }
 
     @Override
