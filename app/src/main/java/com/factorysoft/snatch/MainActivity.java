@@ -11,6 +11,7 @@ import android.graphics.drawable.GradientDrawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.telephony.SmsManager;
+import android.telephony.TelephonyManager;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -213,7 +214,7 @@ public class MainActivity extends FragmentActivity {
         builder.setPositiveButton("전송", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
-                sendSMS(editPhoneNum.getText().toString() ,strMessages);
+                sendSMS(getBaseContext(), editPhoneNum.getText().toString() ,strMessages);
                 Toast.makeText(getApplicationContext(), "문자 전송 완료", Toast.LENGTH_SHORT).show();
             }
         });
@@ -229,7 +230,7 @@ public class MainActivity extends FragmentActivity {
         alertDialog.show();
     }
 
-    private void sendSMS(String DestPhoneNum, ArrayList<String> strMessages) {
+    private void sendSMS(Context context, String DestPhoneNum, ArrayList<String> strMessages) {
         String strTitle = strMessages.get(0);
         String strContent = strMessages.get(1);
         String strDateTime = strMessages.get(2);
@@ -238,28 +239,32 @@ public class MainActivity extends FragmentActivity {
         final int LIMIT_CHARACTER = 80;
 
         if(strDateTime != null) {
-            msFormat = String.format("#Snatch%n" +
+            msFormat = String.format("#자동등록%n" +
                     "[제목]%n" +
                     "%s%n%n" +
                     "[내용]%n" +
-                    "%n%s%n%n" +
+                    "%s%n%n" +
                     "[일시]%n" +
-                    "%s", strTitle, strContent, strDateTime);
+                    "%s%n%n" +
+                    "- Snatch에서 전송함", strTitle, strContent, strDateTime);
         } else {
-            msFormat = String.format("#Snatch%n" +
+            msFormat = String.format("#자동등록%n" +
                     "[제목]%n" +
-                    "%s%n" +
+                    "%s%n%n" +
                     "[내용]%n" +
-                    "%n%s%n", strTitle, strContent);
+                    "%s%n" +
+                    "- Snatch에서 전송함", strTitle, strContent);
         }
 
         SmsManager sender = SmsManager.getDefault();
+        TelephonyManager tm = (TelephonyManager)context.getSystemService(TELEPHONY_SERVICE);
+        String SrcPhoneNum = tm.getLine1Number();
 
         if(msFormat.length() > LIMIT_CHARACTER) {
             ArrayList<String> messages = sender.divideMessage(msFormat);
-            sender.sendMultipartTextMessage(DestPhoneNum, "", messages, null, null);
+            sender.sendMultipartTextMessage(DestPhoneNum, SrcPhoneNum, messages, null, null);
         } else {
-            sender.sendTextMessage(DestPhoneNum, "", msFormat, null, null);
+            sender.sendTextMessage(DestPhoneNum, SrcPhoneNum, msFormat, null, null);
         }
     }
 
