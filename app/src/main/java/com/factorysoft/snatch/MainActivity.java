@@ -58,6 +58,9 @@ public class MainActivity extends FragmentActivity {
         initCards();
     }
 
+    /*
+     *  Inner Class. Create MemoCard
+     */
     public class MemoCard extends Card{
 
         protected String mTitleHeader; // Main Title
@@ -120,7 +123,7 @@ public class MainActivity extends FragmentActivity {
         }
 
         /*
-            InnerViewElements Modification.
+         *  InnerViewElements Modification.
          */
         @Override
         public void setupInnerViewElements(ViewGroup parent, View view) {
@@ -169,6 +172,9 @@ public class MainActivity extends FragmentActivity {
         }
     }
 
+    /*
+     *   문자 전송 다이얼로그 생성
+     */
     private void showDialog(Context context, int id) {
         AlertDialog.Builder builder;
         AlertDialog alertDialog;
@@ -230,6 +236,9 @@ public class MainActivity extends FragmentActivity {
         alertDialog.show();
     }
 
+    /*
+     *  SMS 보내
+     */
     private void sendSMS(Context context, String DestPhoneNum, ArrayList<String> strMessages) {
         String strTitle = strMessages.get(0);
         String strContent = strMessages.get(1);
@@ -252,7 +261,7 @@ public class MainActivity extends FragmentActivity {
                     "[제목]%n" +
                     "%s%n%n" +
                     "[내용]%n" +
-                    "%s%n" +
+                    "%s%n%n" +
                     "- Snatch에서 전송함", strTitle, strContent);
         }
 

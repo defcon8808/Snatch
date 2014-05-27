@@ -1,25 +1,35 @@
 package com.factorysoft.snatch;
 
 
+import android.app.AlertDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteException;
 import android.graphics.Color;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import com.fourmob.colorpicker.ColorPickerDialog;
 import com.fourmob.colorpicker.ColorPickerSwatch;
+
+import java.io.IOException;
 import java.util.Calendar;
+import java.util.List;
 
 
 public class AddMemo extends FragmentActivity {
@@ -34,6 +44,7 @@ public class AddMemo extends FragmentActivity {
     private ColorPickerDialog colorPicker;
     public AlarmReceiver alarm;
     public static Boolean delete = false;
+    private GeoPoint geoPoint = null;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +133,78 @@ public class AddMemo extends FragmentActivity {
         return colorPickerDialog;
     }
 
+    private GeoPoint findGeoPoint(String address) {
+        Geocoder geocoder = new Geocoder(this);
+        Address addr;
+        GeoPoint location = null;
+
+        try {
+            List<Address> listAddress = geocoder.getFromLocationName(address, 1);
+
+            if (listAddress.size() > 0) { // 주소값이 존재 하면
+                addr = listAddress.get(0); // Address형태로
+                double lat = addr.getLatitude();
+                double lng = addr.getLongitude();
+                location = new GeoPoint(lat, lng);
+
+                Log.d("findGeoPoint", "주소로부터 취득한 위도 : " + lat + ", 경도 : " + lng);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
+        return location;
+    }
+
+    private class GeoPoint {
+        private double lat;
+        private double lng;
+
+        public GeoPoint(double _lat, double _lng) {
+            this.lat = _lat;
+            this.lng = _lng;
+        }
+
+        public double getLat() {
+            return lat;
+        }
+
+        public double getLng() {
+            return lng;
+        }
+    }
+
+    private void showDialog(Context context) {
+        AlertDialog.Builder builder;
+        AlertDialog alertDialog;
+
+        LayoutInflater inflater = (LayoutInflater)context.getSystemService(LAYOUT_INFLATER_SERVICE);
+        final View view = inflater.inflate(R.layout.locate_dialog, (ViewGroup)findViewById(R.id.root_linear));
+
+        final EditText locate = (EditText)view.findViewById(R.id.locate);
+
+        builder = new AlertDialog.Builder(context);
+        builder.setView(view);
+        builder.setTitle("위치 설정");
+        builder.setPositiveButton("설정", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                String findAddress = locate.getText().toString();
+                geoPoint = findGeoPoint(findAddress);
+            }
+        });
+
+        builder.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.cancel();
+            }
+        });
+
+        alertDialog = builder.create();
+        alertDialog.show();
+    }
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         
@@ -140,16 +223,34 @@ public class AddMemo extends FragmentActivity {
             strTitle = title.getText().toString();
             strContent = content.getText().toString();
 
+            if(geoPoint != null) {
+                Intent locService = new Intent(this, FindLocateService.class);
+
+                locService.putExtra("Latitude", geoPoint.getLat());
+                locService.putExtra("Longitude", geoPoint.getLng());
+
+                startService(locService);
+            }
 
             try {
                 if(strDate == null) {
                     result = db.rawQuery("SELECT * FROM memo", null);
 
-                    Log.d("onOptionsItemSelected", "count : " + result.getCount());
+                    Log.d("onOptionsItemSelected1", "count : " + result.getCount());
 
-                    _id = result.getCount();
+                    while(result.moveToNext()) {
+                        int ID = result.getInt(result.getColumnIndex("_id"));
+
+                        if(ID > result.getCount()) {
+                            _id = ID;
+                        } else {
+                            _id = ID;
+                        }
+                    }
+                    //_id = result.getCount();
 
                     if(delete) {
+                        _id += 1;
                         db.execSQL("INSERT INTO memo VALUES("+ _id +", '" + strTitle + "', '" + strContent + "', '" + strRgb + "', null);");
                     } else {
                         _id += 1;
@@ -159,11 +260,21 @@ public class AddMemo extends FragmentActivity {
                 } else {
                     result = db.rawQuery("SELECT * FROM memo", null);
 
-                    //Log.d("onOptionsItemSelected", "count : " + result.getCount());
+                    Log.d("onOptionsItemSelected2", "count : " + result.getCount());
 
-                    _id = result.getCount();
+                    while(result.moveToNext()) {
+                        int ID = result.getInt(result.getColumnIndex("_id"));
+
+                        if(ID > result.getCount()) {
+                            _id = ID;
+                        } else {
+                            _id = ID;
+                        }
+                    }
+                   // _id = result.getCount();
 
                     if(delete) {
+                        _id += 1;
                         db.execSQL("INSERT INTO memo VALUES("+ _id + ", '" + strTitle + "', '" + strContent + "', '" + strRgb + "', DATETIME('" + strDate + "'));");
                     } else {
                         _id += 1;
@@ -181,6 +292,8 @@ public class AddMemo extends FragmentActivity {
             colorPicker.show(getSupportFragmentManager(), "colorpicker");
         } else if (id == R.id.alarm_add) {
             dialog.show();
+        } else if (id == R.id.locate_add) {
+            showDialog(AddMemo.this);
         }
 
         return super.onOptionsItemSelected(item);

@@ -15,4 +15,9 @@
         android:id="@+id/alarm_add"
         android:title="알람설정"
         android:showAsAction="never" />
+
+    <item
+        android:id="@+id/locate_add"
+        android:title="위치알람"
+        android:showAsAction="never" />
 </menu>
