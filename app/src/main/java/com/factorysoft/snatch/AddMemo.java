@@ -45,6 +45,7 @@ public class AddMemo extends FragmentActivity {
     public AlarmReceiver alarm;
     public static Boolean delete = false;
     private GeoPoint geoPoint = null;
+    private String Address;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -190,6 +191,7 @@ public class AddMemo extends FragmentActivity {
             @Override
             public void onClick(DialogInterface dialogInterface, int i) {
                 String findAddress = locate.getText().toString();
+                Address = findAddress;
                 geoPoint = findGeoPoint(findAddress);
             }
         });
@@ -228,6 +230,7 @@ public class AddMemo extends FragmentActivity {
 
                 locService.putExtra("Latitude", geoPoint.getLat());
                 locService.putExtra("Longitude", geoPoint.getLng());
+                locService.putExtra("location", Address);
 
                 startService(locService);
             }
