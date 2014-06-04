@@ -47,13 +47,15 @@
             android:id="@+id/tvDateTime"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="9sp"
+            android:textSize="12sp"
             android:textColor="@android:color/darker_gray"
             android:layout_below="@+id/line"
             android:layout_marginTop="2dp"
             android:layout_marginRight="10dp"
+            android:layout_marginBottom="2dp"
             android:layout_alignParentRight="true"
-            android:layout_alignParentEnd="true" />
+            android:layout_alignParentEnd="true"
+            android:textStyle="bold" />
     </RelativeLayout>
 
     

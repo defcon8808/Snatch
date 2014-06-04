@@ -25,7 +25,7 @@ import java.util.Calendar;
 
 public class EditMemo extends FragmentActivity {
     private EditText title, content;
-    private String strTitle, strContent, strRgb, strDate;
+    private String strTitle, strContent, strRgb, strDate, strAddr;
     private LinearLayout llDiv;
     private Button btnAlarmCancel;
     private TextView tvAlarmView;
@@ -73,6 +73,7 @@ public class EditMemo extends FragmentActivity {
             public void onClick(View view) {
                 tvAlarmView.setText(null);
                 strDate = null;
+                strAddr = null;
                 llDiv.setVisibility(View.GONE);
             }
         });
@@ -91,14 +92,20 @@ public class EditMemo extends FragmentActivity {
             Id = intent.getIntExtra("id", -1);
 
             Cursor cursor;
-            cursor = db.rawQuery("SELECT title, content, rgb, time FROM memo where _id="+Id, null);
+            cursor = db.rawQuery("SELECT title, content, rgb, time, addr FROM memo where _id="+Id, null);
 
             while(cursor.moveToNext()) {
-                title.setText(cursor.getString(0));
-                content.setText(cursor.getString(1));
-                strRgb = cursor.getString(2);
+                title.setText(cursor.getString(cursor.getColumnIndex("title")));
+                content.setText(cursor.getString(cursor.getColumnIndex("content")));
+                strRgb = cursor.getString(cursor.getColumnIndex("rgb"));
                 strDate = cursor.getString(cursor.getColumnIndex("time"));
-                tvAlarmView.setText(cursor.getString(3));
+                strAddr = cursor.getString(cursor.getColumnIndex("addr"));
+
+                if(strAddr != null) {
+                    tvAlarmView.setText(strAddr);
+                } else {
+                    tvAlarmView.setText(strDate);
+                }
 
                 cursor.close();
             }

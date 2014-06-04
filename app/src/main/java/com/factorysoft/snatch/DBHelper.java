@@ -10,7 +10,7 @@ import android.database.sqlite.SQLiteOpenHelper;
 public class DBHelper extends SQLiteOpenHelper {
 
     private static final String DATABASE_NAME = "memo.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 1;
     public Context context;
 
     public DBHelper(Context context) {
@@ -22,7 +22,7 @@ public class DBHelper extends SQLiteOpenHelper {
     @Override
     public void onCreate(SQLiteDatabase sqLiteDatabase) {
         //sqLiteDatabase.execSQL("CREATE TABLE memo (_id INTEGER PRIMARY KEY AUTOINCREMENT, title TEXT, content TEXT, rgb TEXT, time DATE);");
-        sqLiteDatabase.execSQL("CREATE TABLE memo (_id INTEGER PRIMARY KEY, title TEXT, content TEXT, rgb TEXT, time DATE);");
+        sqLiteDatabase.execSQL("CREATE TABLE memo (_id INTEGER PRIMARY KEY, title TEXT, content TEXT, rgb TEXT, time DATE, addr TEXT);");
         //Log.d("DB", "DB 생성");
         //Toast.makeText(context, "DB 생성", Toast.LENGTH_SHORT).show();
     }

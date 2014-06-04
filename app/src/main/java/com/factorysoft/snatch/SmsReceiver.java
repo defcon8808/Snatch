@@ -19,12 +19,15 @@ public class SmsReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // TODO: This method is called when the BroadcastReceiver is receiving
         // an Intent broadcast.
+        Log.d("SmsReceiver", "onReceive()");
         Bundle bundle = intent.getExtras();
         String action = intent.getAction();
         String type = intent.getType();
 
         SmsMessage[] msgs = null;
         String strMessage = "";
+
+        Log.d("SmsReceiver", action);
 
         if(action.equals(ACTION_MMS_RECEIVED) && type.equals(MMS_DATA_TYPE)) {
             if (bundle != null) {

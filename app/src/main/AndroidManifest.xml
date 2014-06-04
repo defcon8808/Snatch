@@ -64,20 +64,17 @@
             android:label="@string/title_activity_create_notification" >
         </activity>
 
-        <receiver android:name="com.factorysoft.snatch.SmsReceiver" >
-            <intent-filter>
+        <receiver android:name="com.factorysoft.snatch.SmsReceiver">
+            <intent-filter android:priority="1">
                 <action android:name="android.provider.Telephony.SMS_RECEIVED" />
+            </intent-filter>
+            <intent-filter android:priority="2">
                 <action android:name="android.provider.Telephony.WAP_PUSH_RECEIVED" />
-
                 <data android:mimeType="application/vnd.wap.mms-message" />
             </intent-filter>
         </receiver>
 
-        <service
-            android:name="com.factorysoft.snatch.FindLocateService"
-            android:enabled="true"
-            android:exported="true" >
-        </service>
+        <service android:name=".FindLocateIntentService" android:exported="false"></service>
 
         <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
     </application>
